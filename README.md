@@ -2,9 +2,10 @@
 
 - Need Unity version 2021+
 - Easy use of saves
-- Support many data type (numeric types, unity vectors, Quaternion, Color, custom serializable structs and classes)
+- Supports many data type (numeric types, unity vectors, Quaternion, Color, custom serializable structs and classes)
 - 2 different types save storage - PlayerPrefs or File System
 - 3 different serialization types - JsonUtility, JsonConvert, Binary
+- Can save/load textures
 
 ## Installation
 
@@ -21,7 +22,12 @@ Use the static class UniversalSave from namespace SG.GLobal.SaveSystem
 - UniversalSave.HasKey - check save key
 - UniversalSave.Clear - clear by key (for choosed save storage)
 - UniversalSave.ClearAll - clear all saved data (for choosed save storage)
+
+- UniversalSave.SaveImage - save Texture2D by key
+- UniversalSave.TryLoadImage - try load Texture2D by key
+
 - UniversalSave.DefaultSettings - for change default UniversalSaveSettings
+
 
 ### UniversalSaveSettings
 
