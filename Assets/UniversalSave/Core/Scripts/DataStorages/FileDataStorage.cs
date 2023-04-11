@@ -16,6 +16,13 @@ namespace SG.Global.SaveSystem
                 formatter.Serialize(data, fileStream);
             }
         }
+        
+        public void Save(string key, byte[] bytes)
+        {
+            var path = BuildPath(key);
+            
+            File.WriteAllBytes(path, bytes);
+        }
 
         public bool TryLoad<T>(string key, out T data, ISerializationFormatter formatter)
         {
@@ -31,6 +38,20 @@ namespace SG.Global.SaveSystem
             }
 
             data = default;
+            return false;
+        }
+        
+        public bool TryLoad(string key, out byte[] bytes)
+        {
+            var path = BuildPath(key);
+            
+            if (File.Exists(path))
+            {
+                bytes = File.ReadAllBytes(path);
+                return true;
+            }
+
+            bytes = default;
             return false;
         }
 
@@ -58,7 +79,7 @@ namespace SG.Global.SaveSystem
                 Directory.Delete(_saveDirectory, true);
             }
         }
-        
+
         private string BuildPath(string key)
         {
             if (Directory.Exists(_saveDirectory) == false)

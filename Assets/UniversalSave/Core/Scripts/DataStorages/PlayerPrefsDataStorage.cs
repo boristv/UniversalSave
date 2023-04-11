@@ -14,6 +14,12 @@ namespace SG.Global.SaveSystem
                 PlayerPrefs.SetString(key, stringData);
             }
         }
+        
+        public void Save(string key, byte[] bytes)
+        {
+            var stringData = System.Convert.ToBase64String(bytes);
+            PlayerPrefs.SetString(key, stringData);
+        }
 
         public bool TryLoad<T>(string key, out T data, ISerializationFormatter formatter)
         {
@@ -28,6 +34,19 @@ namespace SG.Global.SaveSystem
             }
 
             data = default;
+            return false;
+        }
+        
+        public bool TryLoad(string key, out byte[] bytes)
+        {
+            if (PlayerPrefs.HasKey(key))
+            {
+                var stringData = PlayerPrefs.GetString(key);
+                bytes = System.Convert.FromBase64String(stringData);
+                return true;
+            }
+
+            bytes = default;
             return false;
         }
 

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace SG.Global.SaveSystem
 {
     public static class UniversalSave
@@ -9,7 +11,7 @@ namespace SG.Global.SaveSystem
             get => _defaultSettings ??= new UniversalSaveSettings();
             set => _defaultSettings = value;
         }
-        
+
         public static void Save<T>(string key, T data, UniversalSaveSettings settings = null)
         {
             settings ??= DefaultSettings;
@@ -23,7 +25,7 @@ namespace SG.Global.SaveSystem
         public static T Load<T>(string key, T defaultValue = default, UniversalSaveSettings settings = null)
         {
             settings ??= DefaultSettings;
-            
+
             var storage = GetDataStorage(settings);
             var formatter = GetFormatter(settings);
 
@@ -31,24 +33,54 @@ namespace SG.Global.SaveSystem
             {
                 return data;
             }
-            
+
             return defaultValue;
         }
 
         public static bool TryLoad<T>(string key, out T data, UniversalSaveSettings settings = null)
         {
             settings ??= DefaultSettings;
-            
+
             var storage = GetDataStorage(settings);
             var formatter = GetFormatter(settings);
-            
+
             return storage.TryLoad(key, out data, formatter);
+        }
+
+        public static void SaveImage(string key, Texture2D texture, UniversalSaveSettings settings = null)
+        {
+            if (texture == null) return;
+
+            settings ??= DefaultSettings;
+
+            var byteArray = texture.EncodeToPNG();
+
+            var storage = GetDataStorage(settings);
+
+            storage.Save(key, byteArray);
+        }
+
+        public static bool TryLoadImage(string key, out Texture2D texture, UniversalSaveSettings settings = null)
+        {
+            settings ??= DefaultSettings;
+
+            var storage = GetDataStorage(settings);
+
+            if (storage.TryLoad(key, out byte[] bytes))
+            {
+                texture = new Texture2D(2, 2);
+                texture.LoadImage(bytes);
+                return true;
+            }
+
+            texture = null;
+            return false;
         }
 
         public static bool HasKey(string key, UniversalSaveSettings settings = null)
         {
             settings ??= DefaultSettings;
-            
+
             var storage = GetDataStorage(settings);
             return storage.HasKey(key);
         }
@@ -56,7 +88,7 @@ namespace SG.Global.SaveSystem
         public static void Clear(string key, UniversalSaveSettings settings = null)
         {
             settings ??= DefaultSettings;
-            
+
             var storage = GetDataStorage(settings);
             storage.Clear(key);
         }
@@ -64,11 +96,11 @@ namespace SG.Global.SaveSystem
         public static void ClearAll(UniversalSaveSettings settings = null)
         {
             settings ??= DefaultSettings;
-            
+
             var storage = GetDataStorage(settings);
             storage.ClearAll();
         }
-        
+
         private static ISerializationFormatter GetFormatter(UniversalSaveSettings settings)
         {
             ISerializationFormatter formatter;
