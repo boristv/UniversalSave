@@ -83,5 +83,6 @@ public class SaveExample : MonoBehaviour
         public Vector3 TestVector3;
         public Vector2Int TestVector2Int;
         public Color TestColor;
+        public Color32 TestColor32;
     }
 }

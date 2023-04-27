@@ -20,23 +20,21 @@ namespace SG.Global.SaveSystem
             _formatter = new BinaryFormatter();
             var selector = new SurrogateSelector();
 
-            var qSurrogate = new QuaternionSerializationSurrogate();
-            var v3Surrogate = new Vector3SerializationSurrogate();
-            var v3IntSurrogate = new Vector3IntSerializationSurrogate();
-            var v2Surrogate = new Vector2SerializationSurrogate();
-            var v2IntSurrogate = new Vector2IntSerializationSurrogate();
-            var v4Surrogate = new Vector4SerializationSurrogate();
-            var colorSurrogate = new ColorSerializationSurrogate();
-            
-            selector.AddSurrogate(typeof(Quaternion), new StreamingContext(StreamingContextStates.All), qSurrogate);
-            selector.AddSurrogate(typeof(Vector3), new StreamingContext(StreamingContextStates.All), v3Surrogate);
-            selector.AddSurrogate(typeof(Vector3Int), new StreamingContext(StreamingContextStates.All), v3IntSurrogate);
-            selector.AddSurrogate(typeof(Vector2), new StreamingContext(StreamingContextStates.All), v2Surrogate);
-            selector.AddSurrogate(typeof(Vector2Int), new StreamingContext(StreamingContextStates.All), v2IntSurrogate);
-            selector.AddSurrogate(typeof(Vector4), new StreamingContext(StreamingContextStates.All), v4Surrogate);
-            selector.AddSurrogate(typeof(Color), new StreamingContext(StreamingContextStates.All), colorSurrogate);
+            AddSurrogate<Quaternion>(selector, new QuaternionSerializationSurrogate());
+            AddSurrogate<Vector3>(selector, new Vector3SerializationSurrogate());
+            AddSurrogate<Vector3Int>(selector, new Vector3IntSerializationSurrogate());
+            AddSurrogate<Vector2>(selector, new Vector2SerializationSurrogate());
+            AddSurrogate<Vector2Int>(selector, new Vector2IntSerializationSurrogate());
+            AddSurrogate<Vector4>(selector, new Vector4SerializationSurrogate());
+            AddSurrogate<Color>(selector, new ColorSerializationSurrogate());
+            AddSurrogate<Color32>(selector, new Color32SerializationSurrogate());
 
             _formatter.SurrogateSelector = selector;
+        }
+
+        private void AddSurrogate<T>(SurrogateSelector selector, ISerializationSurrogate surrogate)
+        {
+            selector.AddSurrogate(typeof(T), new StreamingContext(StreamingContextStates.All), surrogate);
         }
         
         public void Serialize<T>(T data, Stream stream)
