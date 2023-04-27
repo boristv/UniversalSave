@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using SG.Global.SaveSystem;
+using SG.Global.SaveSystem.EditorTool;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
@@ -14,18 +15,26 @@ public class SaveImageExample : MonoBehaviour
     {
         var stopWatch = new Stopwatch();
         stopWatch.Start();
-            
-        UniversalSave.SaveImage(ExampleSaveImageKey, (Texture2D)_meshRenderer.material.mainTexture);
+
+        UniversalSave.SaveImage(ExampleSaveImageKey, (Texture2D) _meshRenderer.material.mainTexture);
 
         stopWatch.Stop();
         Debug.Log($"Save image duration = {stopWatch.ElapsedMilliseconds} ms");
     }
-    
+
+    [ContextMenu("Save Image To File")]
+    public void SaveImageToFile()
+    {
+        var texture = (Texture2D) _meshRenderer.material.mainTexture;
+        texture.Compress(false);
+        texture.Decompress().SaveImageToFileInProject(_meshRenderer.name);
+    }
+
     public void LoadImage()
     {
         var stopWatch = new Stopwatch();
         stopWatch.Start();
-            
+
         if (UniversalSave.TryLoadImage(ExampleSaveImageKey, out var texture))
         {
             _meshRenderer.material.mainTexture = texture;
