@@ -14,14 +14,24 @@ namespace SG.Global.SaveSystem.EditorTool
 
         private static void OnPropertyContextMenu(GenericMenu menu, SerializedProperty property)
         {
-            if (property.propertyType == SerializedPropertyType.ObjectReference &&
-                property.objectReferenceValue is Texture texture)
+            if (property.propertyType == SerializedPropertyType.ObjectReference)
             {
-                menu.AddItem(new GUIContent("Save Image"), false, () =>
+                switch (property.objectReferenceValue)
                 {
-                    var texture2D = (Texture2D) texture;
-                    SaveTexture(texture2D);
-                });
+                    case Texture texture:
+                        menu.AddItem(new GUIContent("Save Image"), false, () =>
+                        {
+                            var texture2D = (Texture2D) texture;
+                            SaveTexture(texture2D);
+                        });
+                        break;
+                    case Sprite sprite:
+                        menu.AddItem(new GUIContent("Save Image"), false, () =>
+                        {
+                            SaveTexture(sprite.texture);
+                        });
+                        break;
+                }
             }
         }
 
