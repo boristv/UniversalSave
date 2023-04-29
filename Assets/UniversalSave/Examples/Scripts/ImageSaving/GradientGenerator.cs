@@ -5,6 +5,8 @@ public class GradientGenerator : MonoBehaviour
     [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] private Gradient _gradient;
     [SerializeField, Range(1, 1024)] private int _resolution = 64;
+    
+    [SerializeField] private Texture2D _testTexture;
 
     private float _step;
 
@@ -25,5 +27,6 @@ public class GradientGenerator : MonoBehaviour
         texture.Apply();
 
         _meshRenderer.material.mainTexture = texture;
+        _testTexture = texture;
     }
 }
