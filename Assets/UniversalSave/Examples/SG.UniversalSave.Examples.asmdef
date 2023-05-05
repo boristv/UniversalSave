@@ -1,0 +1,16 @@
+{
+    "name": "SG.UniversalSave.Examples",
+    "rootNamespace": "",
+    "references": [
+        "GUID:774e9cb590af02748bd1fbef3387f505"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
