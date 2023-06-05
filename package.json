@@ -1,0 +1,25 @@
+{
+  "name": "com.sg.universalsave",
+  "version": "1.2.1",
+  "displayName": "Universal Save",
+  "description": "A simple universal save tool for Unity",
+  "unity": "2021.3",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.0.2"
+  },
+  "author": {
+    "name": "Superec Games"
+  },
+  "samples": [
+    {
+      "displayName": "Sample 1: Saving",
+      "description": "Saving data",
+      "path": "Samples/SampleSaving"
+    },
+    {
+      "displayName": "Sample 2: Image Saving",
+      "description": "Saving generated texture",
+      "path": "Samples/SampleSavingImage"
+    }
+  ]
+}
