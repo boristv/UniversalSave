@@ -1,16 +1,20 @@
 # UniversalSave
 
-- Need Unity version 2021+
 - Easy use of saves
 - Supports many data type (numeric types, unity vectors, Quaternion, Color, custom serializable structs and classes)
 - 2 different types save storage - PlayerPrefs or File System
 - 3 different serialization types - JsonUtility, JsonConvert, Binary
 - Can save/load textures
 
+## Requirements
+
+- Unity 2020.3+
+- Newtonsoft Json 3.0+
+
 ## Installation
 
-- Import unitypackage from releases
-- If examples aren't needed, uncheck the folder "Examples"
+- Import from package manager by local or git url (best way)
+- Import unitypackage from releases (without examples)
 
 ## Instruction
 
@@ -27,6 +31,9 @@ Use the static class UniversalSave from namespace SG.GLobal.SaveSystem
 - UniversalSave.TryLoadImage - try load Texture2D by key
 
 - UniversalSave.DefaultSettings - for change default UniversalSaveSettings
+
+
+Also the editor has the ability to save any texture by selecting "Save image" in the context menu of the texture.
 
 
 ### UniversalSaveSettings
