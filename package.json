@@ -14,12 +14,12 @@
     {
       "displayName": "Sample 1: Saving",
       "description": "Saving data",
-      "path": "Samples/SampleSaving"
+      "path": "Samples~/SampleSaving"
     },
     {
       "displayName": "Sample 2: Image Saving",
       "description": "Saving generated texture",
-      "path": "Samples/SampleSavingImage"
+      "path": "Samples~/SampleSavingImage"
     }
   ]
 }
