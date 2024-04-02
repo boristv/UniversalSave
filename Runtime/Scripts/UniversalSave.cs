@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SG.Global.SaveSystem
 {
-    public static class UniversalSave
+    public static partial class UniversalSave
     {
         private static UniversalSaveSettings _defaultSettings;
 
@@ -11,49 +11,32 @@ namespace SG.Global.SaveSystem
             get => _defaultSettings ??= new UniversalSaveSettings();
             set => _defaultSettings = value;
         }
+        
+        private static (IDataStorage, ISerializationFormatter) GetStorageAndFormatter(UniversalSaveSettings settings = null)
+        {
+            settings ??= DefaultSettings;
+
+            var storage = settings.GetDataStorage();
+            var formatter = settings.GetFormatter();
+
+            return (storage, formatter);
+        }
 
         public static void Save<T>(string key, T data, UniversalSaveSettings settings = null)
         {
-            settings ??= DefaultSettings;
-
-            var storage = settings.GetDataStorage();
-            var formatter = settings.GetFormatter();
-
-            storage.Save(key, data, formatter);
-        }
-        
-        public static void Save(string key, int data, UniversalSaveSettings settings = null)
-        {
-            settings ??= DefaultSettings;
-
-            var storage = settings.GetDataStorage();
-            var formatter = settings.GetFormatter();
-
+            var (storage, formatter) = GetStorageAndFormatter(settings);
             storage.Save(key, data, formatter);
         }
 
         public static T Load<T>(string key, T defaultValue = default, UniversalSaveSettings settings = null)
         {
-            settings ??= DefaultSettings;
-
-            var storage = settings.GetDataStorage();
-            var formatter = settings.GetFormatter();
-
-            if (storage.TryLoad(key, out T data, formatter))
-            {
-                return data;
-            }
-
-            return defaultValue;
+            var (storage, formatter) = GetStorageAndFormatter(settings);
+            return storage.TryLoad(key, out T data, formatter) ? data : defaultValue;
         }
 
         public static bool TryLoad<T>(string key, out T data, UniversalSaveSettings settings = null)
         {
-            settings ??= DefaultSettings;
-
-            var storage = settings.GetDataStorage();
-            var formatter = settings.GetFormatter();
-
+            var (storage, formatter) = GetStorageAndFormatter(settings);
             return storage.TryLoad(key, out data, formatter);
         }
 

@@ -88,5 +88,30 @@ namespace SG.Global.SaveSystem
             }
             return Path.Combine(_saveDirectory, key);
         }
+        
+        #region direct_saving
+        
+        public void Save(string key, string value, ISerializationFormatter formatter)
+        {
+            var path = BuildPath(key);
+            File.Create(path);
+            File.WriteAllText(path, value);
+        }
+
+        public bool TryLoad(string key, out string value, ISerializationFormatter formatter)
+        {
+            var path = BuildPath(key);
+            
+            if (File.Exists(path))
+            {
+                value = File.ReadAllText(path);
+                return true;
+            }
+
+            value = default;
+            return false;
+        }
+        
+        #endregion
     }
 }
