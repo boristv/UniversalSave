@@ -21,6 +21,7 @@ namespace SG.Global.SaveSystem
             using (var reader = new StreamReader(stream))
             {
                 var jsonData = reader.ReadToEnd();
+                //TODO: fix can not read jsonData
                 var data = JsonUtility.FromJson<DataWrapper<T>>(jsonData).Data;
                 return data;
             }

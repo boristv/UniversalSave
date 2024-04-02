@@ -2,13 +2,10 @@ namespace SG.Global.SaveSystem
 {
     public class UniversalSaveSettings
     {
-        public SerializationFormatterType FormatterType;
-        public DataStorageType StorageType;
-
-        public UniversalSaveSettings()
-        {
-            FormatterType = SerializationFormatterType.JsonUtility;
-            StorageType = DataStorageType.PlayerPrefs;
-        }
+        public SerializationFormatterType FormatterType = SerializationFormatterType.JsonUtility;
+        public DataStorageType StorageType = DataStorageType.PlayerPrefs;
+        
+        public bool UseSingleStorage = false;
+        public string SingleStorageName = "saved_game_data";
     }
 }
