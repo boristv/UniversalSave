@@ -16,8 +16,8 @@ namespace SG.Global.SaveSystem
         {
             settings ??= DefaultSettings;
 
-            var storage = settings.GetDataStorage();
-            var formatter = settings.GetFormatter();
+            var storage = settings.Storage;
+            var formatter = settings.Formatter;
 
             return (storage, formatter);
         }
@@ -48,7 +48,7 @@ namespace SG.Global.SaveSystem
 
             var byteArray = texture.EncodeToPNG();
 
-            var storage = settings.GetDataStorage();
+            var storage = settings.Storage;
 
             storage.Save(key, byteArray);
         }
@@ -57,7 +57,7 @@ namespace SG.Global.SaveSystem
         {
             settings ??= DefaultSettings;
 
-            var storage = settings.GetDataStorage();
+            var storage = settings.Storage;
 
             if (storage.TryLoad(key, out byte[] bytes))
             {
@@ -74,7 +74,7 @@ namespace SG.Global.SaveSystem
         {
             settings ??= DefaultSettings;
 
-            var storage = settings.GetDataStorage();
+            var storage = settings.Storage;
             return storage.HasKey(key);
         }
 
@@ -82,7 +82,7 @@ namespace SG.Global.SaveSystem
         {
             settings ??= DefaultSettings;
 
-            var storage = settings.GetDataStorage();
+            var storage = settings.Storage;
             storage.Clear(key);
         }
 
@@ -90,7 +90,7 @@ namespace SG.Global.SaveSystem
         {
             settings ??= DefaultSettings;
 
-            var storage = settings.GetDataStorage();
+            var storage = settings.Storage;
             storage.ClearAll();
         }
     }
