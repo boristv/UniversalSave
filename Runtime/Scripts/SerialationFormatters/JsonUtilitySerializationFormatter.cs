@@ -26,7 +26,19 @@ namespace SG.Global.SaveSystem
                 return data;
             }
         }
-        
+
+        public void Serialize<T>(T data, out string value)
+        {
+            value = JsonUtility.ToJson(new DataWrapper<T>(data));
+        }
+
+        public T Deserialize<T>(string value)
+        {
+            //TODO: fix can not read jsonData
+            var data = JsonUtility.FromJson<DataWrapper<T>>(value).Data;
+            return data;
+        }
+
         [Serializable]
         private struct DataWrapper<T>
         {

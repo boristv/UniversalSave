@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using UnityEngine;
 
 namespace SG.Global.SaveSystem
@@ -8,12 +7,8 @@ namespace SG.Global.SaveSystem
     {
         public void Save<T>(string key, T data, ISerializationFormatter formatter)
         {
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                formatter.Serialize(data, memoryStream);
-                var stringData = Convert.ToBase64String(memoryStream.ToArray());
-                PlayerPrefs.SetString(key, stringData);
-            }
+            formatter.Serialize(data, out var stringData);
+            PlayerPrefs.SetString(key, stringData);
         }
         
         public void Save(string key, byte[] bytes)
@@ -27,12 +22,8 @@ namespace SG.Global.SaveSystem
             if (PlayerPrefs.HasKey(key))
             {
                 var stringData = PlayerPrefs.GetString(key);
-                
-                using (MemoryStream memoryStream = new MemoryStream(Convert.FromBase64String(stringData)))
-                {
-                    data = formatter.Deserialize<T>(memoryStream);
-                    return true;
-                }
+                data = formatter.Deserialize<T>(stringData);
+                return true;
             }
 
             data = default;

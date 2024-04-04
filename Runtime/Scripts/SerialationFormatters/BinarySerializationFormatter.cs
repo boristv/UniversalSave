@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -46,6 +47,24 @@ namespace SG.Global.SaveSystem
         {
             var data = (T) _formatter.Deserialize(stream);
             return data;
+        }
+
+        public void Serialize<T>(T data, out string value)
+        {
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                _formatter.Serialize(memoryStream, data);
+                value = Convert.ToBase64String(memoryStream.ToArray());
+            }
+        }
+
+        public T Deserialize<T>(string value)
+        {
+            using (MemoryStream memoryStream = new MemoryStream(Convert.FromBase64String(value)))
+            {
+                var data = (T) _formatter.Deserialize(memoryStream);
+                return data;
+            }
         }
     }
 }

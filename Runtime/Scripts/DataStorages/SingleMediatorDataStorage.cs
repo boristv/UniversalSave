@@ -90,13 +90,9 @@ namespace SG.Global.SaveSystem
         
         public void Save<T>(string key, T data, ISerializationFormatter formatter)
         {
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                formatter.Serialize(data, memoryStream);
-                var stringData = Convert.ToBase64String(memoryStream.ToArray());
-                _savedGameDataMediator.Add(key, stringData);
-                SaveSingleData();
-            }
+            formatter.Serialize(data, out var stringData);
+            _savedGameDataMediator.Add(key, stringData);
+            SaveSingleData();
         }
         
         public void Save(string key, byte[] bytes)
@@ -110,11 +106,8 @@ namespace SG.Global.SaveSystem
         {
             if (_savedGameDataMediator.HasKey(key, out var stringData))
             {
-                using (MemoryStream memoryStream = new MemoryStream(System.Convert.FromBase64String(stringData)))
-                {
-                    data = formatter.Deserialize<T>(memoryStream);
-                    return true;
-                }
+                data = formatter.Deserialize<T>(stringData);
+                return true;
             }
 
             data = default;

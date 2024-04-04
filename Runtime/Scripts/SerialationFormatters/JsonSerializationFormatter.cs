@@ -24,5 +24,16 @@ namespace SG.Global.SaveSystem
                 return data;
             }
         }
+
+        public void Serialize<T>(T data, out string value)
+        {
+            value = JsonConvert.SerializeObject(data);
+        }
+
+        public T Deserialize<T>(string value)
+        {
+            var data = JsonConvert.DeserializeObject<T>(value);
+            return data;
+        }
     }
 }
