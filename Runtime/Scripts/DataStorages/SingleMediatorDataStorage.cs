@@ -21,7 +21,12 @@ namespace SG.Global.SaveSystem
                 Values = new List<string>()
             };
 
-            public bool HasKey(string key, out string value)
+            public bool HasKey(string key)
+            {
+                return Data.Keys.Contains(key);
+            }
+            
+            public bool TryGet(string key, out string value)
             {
                 if (Data.Keys.Contains(key))
                 {
@@ -104,7 +109,7 @@ namespace SG.Global.SaveSystem
 
         public bool TryLoad<T>(string key, out T data, ISerializationFormatter formatter)
         {
-            if (_savedGameDataMediator.HasKey(key, out var stringData))
+            if (_savedGameDataMediator.TryGet(key, out var stringData))
             {
                 data = formatter.Deserialize<T>(stringData);
                 return true;
@@ -116,7 +121,7 @@ namespace SG.Global.SaveSystem
         
         public bool TryLoad(string key, out byte[] bytes)
         {
-            if (_savedGameDataMediator.HasKey(key, out var stringData))
+            if (_savedGameDataMediator.TryGet(key, out var stringData))
             {
                 bytes = Convert.FromBase64String(stringData);
                 return true;
@@ -128,7 +133,7 @@ namespace SG.Global.SaveSystem
 
         public bool HasKey(string key)
         {
-            return _savedGameDataMediator.HasKey(key, out var value);
+            return _savedGameDataMediator.HasKey(key);
         }
 
         public void Clear(string key)
