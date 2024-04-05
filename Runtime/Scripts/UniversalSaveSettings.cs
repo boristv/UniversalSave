@@ -6,10 +6,11 @@ namespace SG.Global.SaveSystem
     {
         private SerializationFormatterType _formatterType;
         private DataStorageType _storageType;
-        
-        private bool _useSingleStorage = false;
-        public string SingleStorageName = "saved_game_data";
 
+        private bool _useSingleStorage;
+        private string _singleStorageName;
+        private IDataStorage _customDataStorage;
+        
         public IDataStorage Storage { get; private set; }
         public ISerializationFormatter Formatter { get; private set; }
 
@@ -30,40 +31,49 @@ namespace SG.Global.SaveSystem
             }
         }
 
-        public bool UseSingleStorage
-        {
-            get => _useSingleStorage;
-            set
-            {
-                _useSingleStorage = value;
-                if (_useSingleStorage) UpdateStorage();
-            }
-        }
-
         public DataStorageType StorageType
         {
             get => _storageType;
             set
             {
+                if (_storageType == DataStorageType.Custom)
+                {
+                    Debug.LogWarning("Cannot directly change storage type to custom \n Use SetCustomStorage");
+                    return;
+                }
                 _storageType = value;
                 UpdateStorage();
             }
         }
 
+        public void SetCustomStorage(IDataStorage dataStorage)
+        {
+            _storageType = DataStorageType.Custom;
+            _customDataStorage = dataStorage;
+            UpdateStorage();
+        }
+
+        public void SetSingleStorage(bool isSingle, string singleStorageName = "saved_game_data")
+        {
+            _singleStorageName = singleStorageName;
+            _useSingleStorage = isSingle;
+            UpdateStorage();
+        }
+
         private void UpdateStorage()
         {
-            Storage = GetDataStorage(this);
+            Storage = GetDataStorage();
         }
         
         private void UpdateFormatter()
         {
-            Formatter = GetFormatter(this);
+            Formatter = GetFormatter();
         }
         
-        private ISerializationFormatter GetFormatter(UniversalSaveSettings settings)
+        private ISerializationFormatter GetFormatter()
         {
             ISerializationFormatter formatter;
-            switch (settings.FormatterType)
+            switch (_formatterType)
             {
                 default:
                 case SerializationFormatterType.JsonUtility:
@@ -80,10 +90,10 @@ namespace SG.Global.SaveSystem
             return formatter;
         }
 
-        private IDataStorage GetDataStorage(UniversalSaveSettings settings)
+        private IDataStorage GetDataStorage()
         {
             IDataStorage storage;
-            switch (settings.StorageType)
+            switch (_storageType)
             {
                 default:
                 case DataStorageType.PlayerPrefs:
@@ -92,11 +102,14 @@ namespace SG.Global.SaveSystem
                 case DataStorageType.File:
                     storage = new FileDataStorage();
                     break;
+                case DataStorageType.Custom:
+                    storage = _customDataStorage;
+                    break;
             }
 
-            if (settings.UseSingleStorage)
+            if (_useSingleStorage)
             {
-                storage = new SingleMediatorDataStorage(storage, settings.Formatter, settings.SingleStorageName);
+                storage = new SingleMediatorDataStorage(storage, Formatter, _singleStorageName);
             }
 
             return storage;
