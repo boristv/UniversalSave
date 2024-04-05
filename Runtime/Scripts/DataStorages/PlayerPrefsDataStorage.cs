@@ -58,6 +58,11 @@ namespace SG.Global.SaveSystem
             PlayerPrefs.DeleteAll();
         }
 
+        public void SaveAll()
+        {
+            PlayerPrefs.Save();
+        }
+
         #region direct_saving
 
         public void Save(string key, bool value, ISerializationFormatter formatter)

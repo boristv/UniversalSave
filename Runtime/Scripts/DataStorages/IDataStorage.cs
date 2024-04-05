@@ -9,6 +9,8 @@ namespace SG.Global.SaveSystem
         public bool HasKey(string key);
         public void Clear(string key);
         public void ClearAll();
+        
+        public void SaveAll() {}
 
         public void Save(string key, bool value, ISerializationFormatter formatter) 
             => Save<bool>(key, value, formatter);

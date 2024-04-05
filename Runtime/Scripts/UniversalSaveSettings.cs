@@ -8,6 +8,7 @@ namespace SG.Global.SaveSystem
         private DataStorageType _storageType;
 
         private bool _useSingleStorage;
+        private bool _singleStorageAutoSave;
         private string _singleStorageName;
         private IDataStorage _customDataStorage;
         
@@ -53,9 +54,10 @@ namespace SG.Global.SaveSystem
             UpdateStorage();
         }
 
-        public void SetSingleStorage(bool isSingle, string singleStorageName = "saved_game_data")
+        public void SetSingleStorage(bool isSingle, bool autoSave = true, string singleStorageName = "saved_game_data")
         {
             _singleStorageName = singleStorageName;
+            _singleStorageAutoSave = autoSave;
             _useSingleStorage = isSingle;
             UpdateStorage();
         }
@@ -109,7 +111,7 @@ namespace SG.Global.SaveSystem
 
             if (_useSingleStorage)
             {
-                storage = new SingleMediatorDataStorage(storage, Formatter, _singleStorageName);
+                storage = new SingleMediatorDataStorage(storage, Formatter, _singleStorageAutoSave, _singleStorageName);
             }
 
             return storage;

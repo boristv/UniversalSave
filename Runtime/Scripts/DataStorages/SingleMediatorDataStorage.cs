@@ -72,13 +72,16 @@ namespace SG.Global.SaveSystem
         private readonly IDataStorage _dataStorage;
         private readonly ISerializationFormatter _formatter;
         private readonly string _saveKey;
+        private readonly bool _autoSave;
 
         private readonly SavedGameDataMediator _savedGameDataMediator;
 
-        public SingleMediatorDataStorage(IDataStorage dataStorage, ISerializationFormatter formatter, string saveKey)
+        public SingleMediatorDataStorage(IDataStorage dataStorage, ISerializationFormatter formatter, bool autoSave,
+            string saveKey)
         {
             _dataStorage = dataStorage;
             _formatter = formatter;
+            _autoSave = autoSave;
             _saveKey = saveKey;
             _savedGameDataMediator = new SavedGameDataMediator();
             var loaded = _dataStorage.TryLoad(_saveKey, out _savedGameDataMediator.Data, _formatter);
@@ -97,14 +100,20 @@ namespace SG.Global.SaveSystem
         {
             formatter.Serialize(data, out var stringData);
             _savedGameDataMediator.Add(key, stringData);
-            SaveSingleData();
+            if (_autoSave)
+            {
+                SaveSingleData();
+            }
         }
         
         public void Save(string key, byte[] bytes)
         {
             var stringData = Convert.ToBase64String(bytes);
             _savedGameDataMediator.Add(key, stringData);
-            SaveSingleData();
+            if (_autoSave)
+            {
+                SaveSingleData();
+            }
         }
 
         public bool TryLoad<T>(string key, out T data, ISerializationFormatter formatter)
@@ -139,13 +148,21 @@ namespace SG.Global.SaveSystem
         public void Clear(string key)
         {
             _savedGameDataMediator.Remove(key);
-            SaveSingleData();
+            if (_autoSave)
+            {
+                SaveSingleData();
+            }
         }
 
         public void ClearAll()
         {
             _savedGameDataMediator.Clear();
             _dataStorage.Clear(_saveKey);
+        }
+        
+        public void SaveAll()
+        {
+            SaveSingleData();
         }
     }
 }

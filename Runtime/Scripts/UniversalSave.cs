@@ -93,5 +93,13 @@ namespace SG.Global.SaveSystem
             var storage = settings.Storage;
             storage.ClearAll();
         }
+
+        public static void SaveAll(UniversalSaveSettings settings = null)
+        {
+            settings ??= DefaultSettings;
+
+            var storage = settings.Storage;
+            storage.SaveAll();
+        }
     }
 }
