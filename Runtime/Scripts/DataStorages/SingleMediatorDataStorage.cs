@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace SG.Global.SaveSystem
 {
@@ -163,6 +162,7 @@ namespace SG.Global.SaveSystem
         public void SaveAll()
         {
             SaveSingleData();
+            _dataStorage.SaveAll();
         }
     }
 }
