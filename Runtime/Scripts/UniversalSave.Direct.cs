@@ -3,11 +3,21 @@ namespace SG.Global.SaveSystem
     public static partial class UniversalSave
     {
         #region bool
+        
+        public static void SetBool(string key, bool value, UniversalSaveSettings settings = null)
+        {
+            Set(key, value, settings);
+        }
 
         public static void Set(string key, bool value, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
             storage.Set(key, value, formatter);
+        }
+        
+        public static bool GetBool(string key, bool defaultValue = default, UniversalSaveSettings settings = null)
+        {
+            return Get(key, defaultValue, settings);
         }
         
         public static bool Get(string key, bool defaultValue = default, UniversalSaveSettings settings = null)
@@ -26,10 +36,20 @@ namespace SG.Global.SaveSystem
         
         #region int
 
+        public static void SetInt(string key, int value, UniversalSaveSettings settings = null)
+        {
+            Set(key, value, settings);
+        }
+
         public static void Set(string key, int value, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
             storage.Set(key, value, formatter);
+        }
+
+        public static int GetInt(string key, int defaultValue = default, UniversalSaveSettings settings = null)
+        {
+            return Get(key, defaultValue, settings);
         }
         
         public static int Get(string key, int defaultValue = default, UniversalSaveSettings settings = null)
@@ -48,10 +68,20 @@ namespace SG.Global.SaveSystem
         
         #region float
 
+        public static void SetFloat(string key, float value, UniversalSaveSettings settings = null)
+        {
+            Set(key, value, settings);
+        }
+        
         public static void Set(string key, float value, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
             storage.Set(key, value, formatter);
+        }
+        
+        public static float GetFloat(string key, float defaultValue = default, UniversalSaveSettings settings = null)
+        {
+            return Get(key, defaultValue, settings);
         }
         
         public static float Get(string key, float defaultValue = default, UniversalSaveSettings settings = null)
@@ -70,10 +100,20 @@ namespace SG.Global.SaveSystem
         
         #region string
 
+        public static void SetString(string key, string value, UniversalSaveSettings settings = null)
+        {
+            Set(key, value, settings);
+        }
+        
         public static void Set(string key, string value, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
             storage.Set(key, value, formatter);
+        }
+        
+        public static string GetString(string key, string defaultValue = default, UniversalSaveSettings settings = null)
+        {
+            return Get(key, defaultValue, settings);
         }
         
         public static string Get(string key, string defaultValue = default, UniversalSaveSettings settings = null)
