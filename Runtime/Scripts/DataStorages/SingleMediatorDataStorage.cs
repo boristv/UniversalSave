@@ -83,7 +83,7 @@ namespace SG.Global.SaveSystem
             _autoSave = autoSave;
             _saveKey = saveKey;
             _savedGameDataMediator = new SavedGameDataMediator();
-            var loaded = _dataStorage.TryLoad(_saveKey, out _savedGameDataMediator.Data, _formatter);
+            var loaded = _dataStorage.TryGet(_saveKey, out _savedGameDataMediator.Data, _formatter);
             if (!loaded)
             {
                 _savedGameDataMediator = new SavedGameDataMediator();
@@ -92,10 +92,10 @@ namespace SG.Global.SaveSystem
 
         private void SaveSingleData()
         {
-            _dataStorage.Save(_saveKey, _savedGameDataMediator.Data, _formatter);
+            _dataStorage.Set(_saveKey, _savedGameDataMediator.Data, _formatter);
         }
         
-        public void Save<T>(string key, T data, ISerializationFormatter formatter)
+        public void Set<T>(string key, T data, ISerializationFormatter formatter)
         {
             formatter.Serialize(data, out var stringData);
             _savedGameDataMediator.Add(key, stringData);
@@ -105,7 +105,7 @@ namespace SG.Global.SaveSystem
             }
         }
         
-        public void Save(string key, byte[] bytes)
+        public void Set(string key, byte[] bytes)
         {
             var stringData = Convert.ToBase64String(bytes);
             _savedGameDataMediator.Add(key, stringData);
@@ -115,7 +115,7 @@ namespace SG.Global.SaveSystem
             }
         }
 
-        public bool TryLoad<T>(string key, out T data, ISerializationFormatter formatter)
+        public bool TryGet<T>(string key, out T data, ISerializationFormatter formatter)
         {
             if (_savedGameDataMediator.TryGet(key, out var stringData))
             {
@@ -127,7 +127,7 @@ namespace SG.Global.SaveSystem
             return false;
         }
         
-        public bool TryLoad(string key, out byte[] bytes)
+        public bool TryGet(string key, out byte[] bytes)
         {
             if (_savedGameDataMediator.TryGet(key, out var stringData))
             {
@@ -144,7 +144,7 @@ namespace SG.Global.SaveSystem
             return _savedGameDataMediator.HasKey(key);
         }
 
-        public void Clear(string key)
+        public void DeleteKey(string key)
         {
             _savedGameDataMediator.Remove(key);
             if (_autoSave)
@@ -153,16 +153,16 @@ namespace SG.Global.SaveSystem
             }
         }
 
-        public void ClearAll()
+        public void DeleteAll()
         {
             _savedGameDataMediator.Clear();
-            _dataStorage.Clear(_saveKey);
+            _dataStorage.DeleteKey(_saveKey);
         }
         
-        public void SaveAll()
+        public void Save()
         {
             SaveSingleData();
-            _dataStorage.SaveAll();
+            _dataStorage.Save();
         }
     }
 }

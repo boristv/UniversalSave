@@ -22,25 +22,25 @@ namespace SG.Global.SaveSystem
             return (storage, formatter);
         }
 
-        public static void Save<T>(string key, T data, UniversalSaveSettings settings = null)
+        public static void Set<T>(string key, T data, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            storage.Save(key, data, formatter);
+            storage.Set(key, data, formatter);
         }
 
-        public static T Load<T>(string key, T defaultValue = default, UniversalSaveSettings settings = null)
+        public static T Get<T>(string key, T defaultValue = default, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            return storage.TryLoad(key, out T data, formatter) ? data : defaultValue;
+            return storage.TryGet(key, out T data, formatter) ? data : defaultValue;
         }
 
-        public static bool TryLoad<T>(string key, out T data, UniversalSaveSettings settings = null)
+        public static bool TryGet<T>(string key, out T data, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            return storage.TryLoad(key, out data, formatter);
+            return storage.TryGet(key, out data, formatter);
         }
 
-        public static void SaveImage(string key, Texture2D texture, UniversalSaveSettings settings = null)
+        public static void SetImage(string key, Texture2D texture, UniversalSaveSettings settings = null)
         {
             if (texture == null) return;
 
@@ -50,16 +50,16 @@ namespace SG.Global.SaveSystem
 
             var storage = settings.Storage;
 
-            storage.Save(key, byteArray);
+            storage.Set(key, byteArray);
         }
 
-        public static bool TryLoadImage(string key, out Texture2D texture, UniversalSaveSettings settings = null)
+        public static bool TryGetImage(string key, out Texture2D texture, UniversalSaveSettings settings = null)
         {
             settings ??= DefaultSettings;
 
             var storage = settings.Storage;
 
-            if (storage.TryLoad(key, out byte[] bytes))
+            if (storage.TryGet(key, out byte[] bytes))
             {
                 texture = new Texture2D(2, 2);
                 texture.LoadImage(bytes);
@@ -78,28 +78,28 @@ namespace SG.Global.SaveSystem
             return storage.HasKey(key);
         }
 
-        public static void Clear(string key, UniversalSaveSettings settings = null)
+        public static void DeleteKey(string key, UniversalSaveSettings settings = null)
         {
             settings ??= DefaultSettings;
 
             var storage = settings.Storage;
-            storage.Clear(key);
+            storage.DeleteKey(key);
         }
 
-        public static void ClearAll(UniversalSaveSettings settings = null)
+        public static void DeleteAll(UniversalSaveSettings settings = null)
         {
             settings ??= DefaultSettings;
 
             var storage = settings.Storage;
-            storage.ClearAll();
+            storage.DeleteAll();
         }
 
-        public static void SaveAll(UniversalSaveSettings settings = null)
+        public static void Save(UniversalSaveSettings settings = null)
         {
             settings ??= DefaultSettings;
 
             var storage = settings.Storage;
-            storage.SaveAll();
+            storage.Save();
         }
     }
 }

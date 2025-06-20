@@ -4,88 +4,88 @@ namespace SG.Global.SaveSystem
     {
         #region bool
 
-        public static void Save(string key, bool value, UniversalSaveSettings settings = null)
+        public static void Set(string key, bool value, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            storage.Save(key, value, formatter);
+            storage.Set(key, value, formatter);
         }
         
-        public static bool Load(string key, bool defaultValue = default, UniversalSaveSettings settings = null)
+        public static bool Get(string key, bool defaultValue = default, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            return storage.TryLoad(key, out bool value, formatter) ? value : defaultValue;
+            return storage.TryGet(key, out bool value, formatter) ? value : defaultValue;
         }
 
-        public static bool TryLoad(string key, out bool value, UniversalSaveSettings settings = null)
+        public static bool TryGet(string key, out bool value, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            return storage.TryLoad(key, out value, formatter);
+            return storage.TryGet(key, out value, formatter);
         }
 
         #endregion
         
         #region int
 
-        public static void Save(string key, int value, UniversalSaveSettings settings = null)
+        public static void Set(string key, int value, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            storage.Save(key, value, formatter);
+            storage.Set(key, value, formatter);
         }
         
-        public static int Load(string key, int defaultValue = default, UniversalSaveSettings settings = null)
+        public static int Get(string key, int defaultValue = default, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            return storage.TryLoad(key, out int value, formatter) ? value : defaultValue;
+            return storage.TryGet(key, out int value, formatter) ? value : defaultValue;
         }
 
-        public static bool TryLoad(string key, out int value, UniversalSaveSettings settings = null)
+        public static bool TryGet(string key, out int value, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            return storage.TryLoad(key, out value, formatter);
+            return storage.TryGet(key, out value, formatter);
         }
 
         #endregion
         
         #region float
 
-        public static void Save(string key, float value, UniversalSaveSettings settings = null)
+        public static void Set(string key, float value, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            storage.Save(key, value, formatter);
+            storage.Set(key, value, formatter);
         }
         
-        public static float Load(string key, float defaultValue = default, UniversalSaveSettings settings = null)
+        public static float Get(string key, float defaultValue = default, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            return storage.TryLoad(key, out float value, formatter) ? value : defaultValue;
+            return storage.TryGet(key, out float value, formatter) ? value : defaultValue;
         }
 
-        public static bool TryLoad(string key, out float value, UniversalSaveSettings settings = null)
+        public static bool TryGet(string key, out float value, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            return storage.TryLoad(key, out value, formatter);
+            return storage.TryGet(key, out value, formatter);
         }
 
         #endregion
         
         #region string
 
-        public static void Save(string key, string value, UniversalSaveSettings settings = null)
+        public static void Set(string key, string value, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            storage.Save(key, value, formatter);
+            storage.Set(key, value, formatter);
         }
         
-        public static string Load(string key, string defaultValue = default, UniversalSaveSettings settings = null)
+        public static string Get(string key, string defaultValue = default, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            return storage.TryLoad(key, out string value, formatter) ? value : defaultValue;
+            return storage.TryGet(key, out string value, formatter) ? value : defaultValue;
         }
 
-        public static bool TryLoad(string key, out string value, UniversalSaveSettings settings = null)
+        public static bool TryGet(string key, out string value, UniversalSaveSettings settings = null)
         {
             var (storage, formatter) = GetStorageAndFormatter(settings);
-            return storage.TryLoad(key, out value, formatter);
+            return storage.TryGet(key, out value, formatter);
         }
 
         #endregion

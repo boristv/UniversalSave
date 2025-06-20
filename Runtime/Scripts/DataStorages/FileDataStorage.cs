@@ -7,7 +7,7 @@ namespace SG.Global.SaveSystem
     {
         private readonly string _saveDirectory = Path.Combine(Application.persistentDataPath, "Saves");
         
-        public void Save<T>(string key, T data, ISerializationFormatter formatter)
+        public void Set<T>(string key, T data, ISerializationFormatter formatter)
         {
             var path = BuildPath(key);
             
@@ -17,14 +17,14 @@ namespace SG.Global.SaveSystem
             }
         }
         
-        public void Save(string key, byte[] bytes)
+        public void Set(string key, byte[] bytes)
         {
             var path = BuildPath(key);
             
             File.WriteAllBytes(path, bytes);
         }
 
-        public bool TryLoad<T>(string key, out T data, ISerializationFormatter formatter)
+        public bool TryGet<T>(string key, out T data, ISerializationFormatter formatter)
         {
             var path = BuildPath(key);
             
@@ -41,7 +41,7 @@ namespace SG.Global.SaveSystem
             return false;
         }
         
-        public bool TryLoad(string key, out byte[] bytes)
+        public bool TryGet(string key, out byte[] bytes)
         {
             var path = BuildPath(key);
             
@@ -62,7 +62,7 @@ namespace SG.Global.SaveSystem
             return File.Exists(path);
         }
 
-        public void Clear(string key)
+        public void DeleteKey(string key)
         {
             var path = BuildPath(key);
             
@@ -72,7 +72,7 @@ namespace SG.Global.SaveSystem
             }
         }
 
-        public void ClearAll()
+        public void DeleteAll()
         {
             if (Directory.Exists(_saveDirectory))
             {
@@ -91,14 +91,14 @@ namespace SG.Global.SaveSystem
         
         #region direct_saving
         
-        public void Save(string key, string value, ISerializationFormatter formatter)
+        public void Set(string key, string value, ISerializationFormatter formatter)
         {
             var path = BuildPath(key);
             File.Create(path);
             File.WriteAllText(path, value);
         }
 
-        public bool TryLoad(string key, out string value, ISerializationFormatter formatter)
+        public bool TryGet(string key, out string value, ISerializationFormatter formatter)
         {
             var path = BuildPath(key);
             

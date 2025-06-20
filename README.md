@@ -20,15 +20,18 @@
 
 Use the static class UniversalSave from namespace SG.GLobal.SaveSystem
 
-- UniversalSave.Save - save data by key
-- UniversalSave.Load - load data by key
-- UniversalSave.TryLoad - try load data by key
+- UniversalSave.Set - set data by key
+- UniversalSave.Get - get data by key
+- UniversalSave.TryGet - try get data by key
 - UniversalSave.HasKey - check save key
-- UniversalSave.Clear - clear by key (for choosed save storage)
-- UniversalSave.ClearAll - clear all saved data (for choosed save storage)
+- UniversalSave.Save - save data for all keys
+- UniversalSave.DeleteKey - delete by key (for choosed save storage)
+- UniversalSave.DeleteAll - delete all saved data (for choosed save storage)
 
-- UniversalSave.SaveImage - save Texture2D by key
-- UniversalSave.TryLoadImage - try load Texture2D by key
+
+- UniversalSave.SetImage - set Texture2D by key
+- UniversalSave.TryGetImage - try get Texture2D by key
+
 
 - UniversalSave.DefaultSettings - for change default UniversalSaveSettings
 
