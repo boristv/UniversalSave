@@ -1,6 +1,6 @@
 {
   "name": "com.sg.universalsave",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "displayName": "Universal Save",
   "description": "A simple universal save tool for Unity",
   "unity": "2021.3",

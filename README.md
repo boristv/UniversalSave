@@ -18,7 +18,7 @@
 
 ## Instruction
 
-Use the static class UniversalSave from namespace SG.GLobal.SaveSystem
+Use the static class UniversalSave from namespace SG.Global.SaveSystem
 
 - UniversalSave.Set - set data by key
 - UniversalSave.Get - get data by key
@@ -27,6 +27,18 @@ Use the static class UniversalSave from namespace SG.GLobal.SaveSystem
 - UniversalSave.Save - save data for all keys
 - UniversalSave.DeleteKey - delete by key (for choosed save storage)
 - UniversalSave.DeleteAll - delete all saved data (for choosed save storage)
+
+
+- Methods for consistency with PlayerPrefs (for easy replacement PlayerPrefs.* to UniversalSave.*) 
+To work without replacement with PlayerPrefs, you can immediately use just Set and Get - they work similarly.
+  - UniversalSave.SetInt
+  - UniversalSave.SetFloat
+  - UniversalSave.SetString
+  - UniversalSave.SetBool
+  - UniversalSave.GetInt
+  - UniversalSave.GetFloat
+  - UniversalSave.GetString
+  - UniversalSave.GetBool
 
 
 - UniversalSave.SetImage - set Texture2D by key
